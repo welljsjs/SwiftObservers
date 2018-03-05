@@ -23,14 +23,14 @@ internal final class Singleton: NSObject {
     // MARK: - Properties (Just some example properties)
     internal var messages = [Message]() {
         didSet {
-            informDelegates { (delegate) in
+            informObservers { (delegate) in
                 delegate.didSetMessages?(messages: messages)
             }
         }
     }
     internal var contacts = [Contact]() {
         didSet {
-            informDelegates { (delegate) in
+            informObservers { (delegate) in
                 delegate.didSetContacts?(contacts: contacts)
             }
         }
@@ -76,7 +76,7 @@ internal final class Singleton: NSObject {
     
     
     /// Executes the same code (passed as argument *execution*) for all observers that are in the list of observers.
-    private final func informDelegates(execution: ((SingletonObserver) -> Void)) {
+    private final func informObservers(execution: ((SingletonObserver) -> Void)) {
         if let delegates = observers {
             for delegate in delegates {
                 execution(delegate)
